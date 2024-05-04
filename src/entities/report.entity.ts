@@ -17,9 +17,13 @@ export class ReportEntity {
   @Column('text')
   description: string;
 
-  @Column({ length: 255 })
+  @Column({ length: 255, default: 'pending' })
   status: string;
 
   @Column('date')
   date: Date;
+
+  constructor() {
+    this.date = new Date();
+  }
 }
