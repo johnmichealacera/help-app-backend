@@ -14,6 +14,7 @@ export class ReportService {
     try {
       const newReport = this.reportRepository.create({
         ...bodyDto,
+        status: 'pending',
         date: new Date(),
       });
       return this.reportRepository.save(newReport);

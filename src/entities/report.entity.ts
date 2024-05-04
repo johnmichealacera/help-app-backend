@@ -17,6 +17,9 @@ export class ReportEntity {
   @Column('text')
   description: string;
 
+  @Column({ length: 255 })
+  status: string;
+
   @Column('date')
   date: Date;
 }
