@@ -7,7 +7,10 @@ export class Personnel {
   id: string;
 
   @Column({ length: 255 })
-  name: string;
+  firstname: string;
+
+  @Column({ length: 255 })
+  lastname: string;
 
   @Column({ length: 255 })
   email: string;
