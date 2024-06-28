@@ -15,7 +15,13 @@ export class ReportEntity {
   department: string;
 
   @Column('text')
-  description: string;
+  what: string;
+
+  @Column('text')
+  when: string;
+
+  @Column('text')
+  where: string;
 
   @Column({ length: 255, default: 'pending' })
   status: string;
