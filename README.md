@@ -1,73 +1,222 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Help App Backend
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A NestJS-based backend API for a help and reporting system that manages announcements and incident reports within an organization.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 🚀 Features
 
-## Description
+- **Announcement Management**: Department-specific announcements system
+- **Incident Reporting**: Create and track incident reports with status management
+- **Personnel Management**: User management with department-based organization
+- **PostgreSQL Integration**: Robust database support with TypeORM
+- **CORS Enabled**: Cross-origin resource sharing for frontend integration
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 🏗️ Architecture
 
-## Installation
+This application is built with:
+- **NestJS**: Progressive Node.js framework
+- **TypeORM**: Object-Relational Mapping for database operations
+- **PostgreSQL**: Primary database
+- **TypeScript**: Type-safe development
 
+## 📋 Prerequisites
+
+Before running this application, make sure you have:
+
+- Node.js (v16 or higher)
+- npm or yarn
+- PostgreSQL database
+- Git
+
+## 🛠️ Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd help-app-backend
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Environment Configuration**
+   Create a `.env` file in the root directory with the following variables:
+   ```env
+   POSTGRES_HOST=localhost
+   POSTGRES_PORT=5432
+   POSTGRES_USER=your_username
+   POSTGRES_PASSWORD=your_password
+   POSTGRES_DATABASE=help_app_db
+   SSL_MODE=require
+   ```
+
+4. **Database Setup**
+   - Create a PostgreSQL database named `help_app_db` (or your preferred name)
+   - Update the `.env` file with your database credentials
+   - The application will automatically create tables based on the entities
+
+## 🚀 Running the Application
+
+### Development Mode
 ```bash
-$ npm install
+npm run start:dev
 ```
 
-## Running the app
-
+### Production Mode
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm run build
+npm run start:prod
 ```
 
-## Test
-
+### Debug Mode
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm run start:debug
 ```
 
-## Support
+The application will start on `http://localhost:3000`
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## 📊 Database Schema
 
-## Stay in touch
+### Entities
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+#### Personnel (Users)
+- `id`: UUID (Primary Key)
+- `firstname`: String (255 chars)
+- `lastname`: String (255 chars)
+- `email`: String (255 chars)
+- `department`: Text
+- `image_url`: String (255 chars)
 
-## License
+#### Announcements
+- `id`: UUID (Primary Key)
+- `personnel_id`: UUID (Foreign Key to Personnel)
+- `subject`: String (255 chars)
+- `description`: Text
+- `date`: Date
 
-Nest is [MIT licensed](LICENSE).
+#### Reports
+- `id`: UUID (Primary Key)
+- `name`: String (255 chars)
+- `contact_number`: String (255 chars)
+- `department`: String (255 chars)
+- `what`: Text (incident description)
+- `when`: Text (timing information)
+- `where`: Text (location information)
+- `status`: String (255 chars, default: 'pending')
+- `date`: Date
+
+## 🔌 API Endpoints
+
+### Announcements
+- **GET** `/announcements/:department` - Retrieve announcements for a specific department
+
+### Reports
+- **POST** `/reports/` - Create a new incident report
+
+## 🧪 Testing
+
+### Unit Tests
+```bash
+npm run test
+```
+
+### E2E Tests
+```bash
+npm run test:e2e
+```
+
+### Test Coverage
+```bash
+npm run test:cov
+```
+
+### Watch Mode
+```bash
+npm run test:watch
+```
+
+## 🔧 Development
+
+### Code Formatting
+```bash
+npm run format
+```
+
+### Linting
+```bash
+npm run lint
+```
+
+## 📁 Project Structure
+
+```
+src/
+├── announcement/          # Announcement module
+│   ├── announcement.controller.ts
+│   ├── announcement.module.ts
+│   └── announcement.service.ts
+├── entities/             # Database entities
+│   ├── announcement.entity.ts
+│   ├── personnel.entity.ts
+│   └── report.entity.ts
+├── report/               # Report module
+│   ├── report.controller.ts
+│   ├── report.module.ts
+│   └── report.service.ts
+├── app.controller.ts      # Main application controller
+├── app.module.ts         # Main application module
+├── app.service.ts        # Main application service
+└── main.ts              # Application entry point
+```
+
+## 🔒 Security Notes
+
+- The application currently has CORS enabled for all origins (`origin: '*'`). Consider restricting this in production.
+- SSL configuration is set to `rejectUnauthorized: false`. Review this setting for production deployment.
+- Ensure proper environment variable management and never commit sensitive credentials.
+
+## 🚀 Deployment
+
+1. **Build the application**
+   ```bash
+   npm run build
+   ```
+
+2. **Set production environment variables**
+   - Update database credentials
+   - Configure SSL settings appropriately
+   - Set proper CORS origins
+
+3. **Run the application**
+   ```bash
+   npm run start:prod
+   ```
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📝 License
+
+This project is licensed under the UNLICENSED License - see the package.json file for details.
+
+## 🆘 Support
+
+If you encounter any issues or have questions:
+
+1. Check the existing issues in the repository
+2. Create a new issue with detailed information
+3. Include error logs and steps to reproduce the issue
+
+## 🔄 Version History
+
+- **v0.0.1** - Initial release with basic announcement and reporting functionality
+
+---
+
+Built with ❤️ using NestJS
